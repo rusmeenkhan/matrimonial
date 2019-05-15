@@ -1,0 +1,29 @@
+   <?php
+   if(empty($_POST["Email"])||empty($_POST["pass"]))
+          {
+           header("location:index.php");
+          }
+	else
+	      {
+			 $Email=$_POST["Email"];
+			 $pass=$_POST["pass"];
+			 include("db.php");
+			 $rs=mysql_query("select * from record where Email='$Email'");
+			 if($r=mysql_fetch_array($rs))
+			     {
+			        if($r["pass"]==$pass)
+						{
+							 setCookie("login",$Email,time()+3600);
+							 header("location:main.php");
+						}
+				    else
+					   {
+							  header("location:index.php?invalid=1");
+						}
+		         }
+		   else
+		   {
+			   header("location:index.php?wrong id/pass");
+		   }
+		  }  
+   ?> 
